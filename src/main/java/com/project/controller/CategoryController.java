@@ -1,9 +1,10 @@
 package com.project.controller;
 
+import com.project.helper.CategoryHelper;
 import com.project.model.Category;
 import com.project.service.PersistenceService;
+import com.project.wrapper.CategoryForm;
 import com.project.wrapper.CategoryWrapper;
-import com.project.wrapper.Form;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,9 @@ public class CategoryController{
 
     List<CategoryWrapper> wrappers = new LinkedList<CategoryWrapper>();
 
-    Form form = new Form();
+    CategoryForm form = new CategoryForm();
+
+    CategoryHelper helper = new CategoryHelper();
 
     @RequestMapping(method = RequestMethod.GET)
     public String init(ModelMap modelMap){
@@ -34,7 +37,7 @@ public class CategoryController{
         CategoryWrapper wrapper = new CategoryWrapper();
         wrapper.setCategory(category);
         modelMap.addAttribute("message","Hi..");
-        wrappers = initWrapperList(persistenceService.readAll(Category.class));
+        wrappers = helper.initWrapperList(persistenceService.readAll(Category.class));
         wrappers.add(0,wrapper);
         form.setWrappers(wrappers);
         modelMap.addAttribute("categoryForm",form);
@@ -43,15 +46,12 @@ public class CategoryController{
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String insert(@ModelAttribute("categoryForm") Form form,ModelMap modelMap){
-
+    public String insert(@ModelAttribute("categoryForm") CategoryForm form,ModelMap modelMap){
         Category newCategory = form.getWrappers().get(0).getCategory();
-
         if(!newCategory.getName().equals(null)){
             persistenceService.create(newCategory);
         }
-
-        wrappers = initWrapperList(persistenceService.readAll(Category.class));
+        wrappers = helper.initWrapperList(persistenceService.readAll(Category.class));
         modelMap.addAttribute("list",wrappers);
         return "category";
     }
@@ -60,17 +60,5 @@ public class CategoryController{
     @ResponseBody
     public List findAll(ModelMap modelMap){
         return persistenceService.readAll(Category.class);
-    }
-
-
-    public List<CategoryWrapper> initWrapperList(List<Category> objects){
-        List<CategoryWrapper> wraps = new LinkedList<CategoryWrapper>();
-        for (int i = 0; i < objects.size(); i++) {
-            CategoryWrapper wrapper = new CategoryWrapper();
-            wrapper.setSelected(false);
-            wrapper.setCategory(objects.get(i));
-            wraps.add(wrapper);
-        }
-        return wraps;
     }
 }

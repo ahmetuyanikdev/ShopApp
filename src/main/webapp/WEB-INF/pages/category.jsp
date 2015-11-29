@@ -3,10 +3,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Categories</title>
+    <title>Categories
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+          crossorigin="anonymous">
 </head>
 <script  type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js">
 </script>
+
 <script>
     function getAllCategory() {
         $.ajax({
@@ -21,50 +27,87 @@
     }
 </script>
 <body>
+    <div style="width: 90%;margin-left: 5%;">
+    <a href="${pageContext.request.contextPath}">< Home</a>
     <h1>${message}</h1>
-    <h2>${pageContext.request.contextPath}</h2>
     <form:form method="post" action="/ShopApp/category" commandName="categoryForm">
-        <table>
-            <c:forEach var="w" items="${categoryForm.wrappers}" varStatus="status">
+        <div style="width: 30%;float: left">
+            <table class="table">
+                <thead>
                 <tr>
-                    <td>
-                        <c:if test="${categoryForm.wrappers[status.index].category.name!=null}">
-                            <label>${categoryForm.wrappers[status.index].category.name}</label>
-                        </c:if>
-                        <c:if test="${categoryForm.wrappers[status.index].category.name==null}">
-                            New Category :
-                            <form:input path="wrappers[${status.index}].category.name"></form:input>
-                        </c:if>
-                    </td>
-                    <td>
-                        <form:checkbox path="wrappers[${status.index}].selected"></form:checkbox>
-                    </td>
+                    <th>
+                        Category Name
+                    </th>
+                    <th>
+                        Select
+                    </th>
                 </tr>
-            </c:forEach>
+                </thead>
 
-            <tr>
-                <td colspan="2"><input type="submit" value="Save Category"></td>
-            </tr>
+                <tbody>
+                <c:forEach var="w" items="${categoryForm.wrappers}" varStatus="status">
+                    <tr>
+                        <td>
+                            <c:if test="${categoryForm.wrappers[status.index].category.name!=null}">
+                                <label>${categoryForm.wrappers[status.index].category.name}</label>
+                            </c:if>
+                            <c:if test="${categoryForm.wrappers[status.index].category.name==null}">
+                                New :
+                                <form:input cssClass="text-input" path="wrappers[${status.index}].category.name"></form:input>
+                            </c:if>
+                        </td>
+                        <td>
+                            <c:if test="${categoryForm.wrappers[status.index].category.name!=null}">
+                                <form:checkbox path="wrappers[${status.index}].selected"></form:checkbox>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
 
-            <tfoot>
+                <tfoot>
+                <tr>
+                    <td colspan="2"><input type="submit" class="button" value="Save Category"></td>
+                </tr>
+
                 <tr>
                     <td colspan="2"><input type="button" onclick="getAllCategory()" value="All Categories"></td>
                 </tr>
-            </tfoot>
+                </tfoot>
+            </table>
+        </div>
+        <div style="width: 70%;float: left">
+            <table>
+                <thead>
+                    <tr>
+                        Product Name
+                    </tr>
+                </thead>
+                <tbody>
 
-        </table>
+                </tbody>
+            </table>
+        </div>
+
     </form:form>
 
     <hr>
 
     <div>
-        <table>
-            <c:forEach var="wp" items="${list}" varStatus="status" >
-                <tr>
-                    <td>${wp.category.name}</td>
-                    <%--<td><form:radiobutton path="items[${status.index}].selected"></form:radiobutton></td>--%>
-                </tr>
-            </c:forEach>
+        <table class="table">
+            <thead>
+                <th>
+                    Category Name
+                </th>
+            </thead>
+            <tbody>
+                <c:forEach var="wp" items="${list}" varStatus="status" >
+                    <tr>
+                        <td>${wp.category.name}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+
         </table>
     </div>
     <table id="categoryData">
@@ -72,6 +115,6 @@
 
         </tbody>
     </table>
-
+    </div>
 </body>
 </html>

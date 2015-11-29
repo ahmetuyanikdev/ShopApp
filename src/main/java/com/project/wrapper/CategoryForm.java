@@ -2,8 +2,9 @@ package com.project.wrapper;
 
 import java.util.List;
 
-public class Form {
+public class CategoryForm {
     public List<CategoryWrapper> wrappers;
+
     public List<CategoryWrapper> getWrappers() {
         return wrappers;
     }
