@@ -1,4 +1,4 @@
-package com.project.wrapper;
+package com.project.utility;
 
 import com.project.model.Product;
 

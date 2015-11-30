@@ -3,8 +3,8 @@ package com.project.controller;
 import com.project.helper.CategoryHelper;
 import com.project.model.Category;
 import com.project.service.PersistenceService;
-import com.project.wrapper.CategoryForm;
-import com.project.wrapper.CategoryWrapper;
+import com.project.utility.CategoryForm;
+import com.project.utility.CategoryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/category")
@@ -29,6 +30,7 @@ public class CategoryController{
     CategoryForm form = new CategoryForm();
 
     CategoryHelper helper = new CategoryHelper();
+    Map<Integer,String> idMap;
 
     @RequestMapping(method = RequestMethod.GET)
     public String init(ModelMap modelMap){
@@ -40,6 +42,7 @@ public class CategoryController{
         wrappers = helper.initWrapperList(persistenceService.readAll(Category.class));
         wrappers.add(0,wrapper);
         form.setWrappers(wrappers);
+        idMap = helper.getIdMap(wrappers);
         modelMap.addAttribute("categoryForm",form);
         modelMap.addAttribute("list",wrappers);
         return "category";
@@ -47,9 +50,13 @@ public class CategoryController{
 
     @RequestMapping(method = RequestMethod.POST)
     public String insert(@ModelAttribute("categoryForm") CategoryForm form,ModelMap modelMap){
-        Category newCategory = form.getWrappers().get(0).getCategory();
-        if(!newCategory.getName().equals(null)){
-            persistenceService.create(newCategory);
+
+        for (int i = 0; i <form.getWrappers().size(); i++) {
+            Category category = form.getWrappers().get(i).getCategory();
+            if(!category.getName().equals("")){
+                category.setId(idMap.get(i));
+                persistenceService.update(category);
+            }
         }
         wrappers = helper.initWrapperList(persistenceService.readAll(Category.class));
         modelMap.addAttribute("list",wrappers);

@@ -8,8 +8,9 @@
 <body>
   <h1>${message}</h1>
     <h2>${pageContext.request.contextPath}</h2>
-    <a href="/ShopApp/category">Categories</a>
-    <a href="/ShopApp/product">Products</a>
+    <a href="${pageContext.request.contextPath}/category">Categories</a>
+    <a href="${pageContext.request.contextPath}/product">Products</a>
+    <a href="${pageContext.request.contextPath}/saleItem">Sale Items</a>
 </body>
 
 </html>

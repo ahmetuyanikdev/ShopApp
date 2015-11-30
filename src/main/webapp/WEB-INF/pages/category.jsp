@@ -6,9 +6,7 @@
     <title>Categories
     </title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
-          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <script  type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js">
 </script>
@@ -31,7 +29,7 @@
     <a href="${pageContext.request.contextPath}">< Home</a>
     <h1>${message}</h1>
     <form:form method="post" action="/ShopApp/category" commandName="categoryForm">
-        <div style="width: 30%;float: left">
+
             <table class="table">
                 <thead>
                 <tr>
@@ -48,13 +46,7 @@
                 <c:forEach var="w" items="${categoryForm.wrappers}" varStatus="status">
                     <tr>
                         <td>
-                            <c:if test="${categoryForm.wrappers[status.index].category.name!=null}">
-                                <label>${categoryForm.wrappers[status.index].category.name}</label>
-                            </c:if>
-                            <c:if test="${categoryForm.wrappers[status.index].category.name==null}">
-                                New :
-                                <form:input cssClass="text-input" path="wrappers[${status.index}].category.name"></form:input>
-                            </c:if>
+                            <form:input cssClass="text-input" path="wrappers[${status.index}].category.name"></form:input>
                         </td>
                         <td>
                             <c:if test="${categoryForm.wrappers[status.index].category.name!=null}">
@@ -70,28 +62,12 @@
                     <td colspan="2"><input type="submit" class="button" value="Save Category"></td>
                 </tr>
 
-                <tr>
+               <%-- <tr>
                     <td colspan="2"><input type="button" onclick="getAllCategory()" value="All Categories"></td>
-                </tr>
+                </tr>--%>
                 </tfoot>
             </table>
-        </div>
-        <div style="width: 70%;float: left">
-            <table>
-                <thead>
-                    <tr>
-                        Product Name
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </div>
-
     </form:form>
-
-    <hr>
 
     <div>
         <table class="table">

@@ -1,6 +1,4 @@
-package com.project.wrapper;
-
-import com.project.model.Shop;
+package com.project.utility;
 
 public class BaseWrapper {
 
