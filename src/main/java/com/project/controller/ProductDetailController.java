@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.project.model.Product;
 import com.project.model.PurchaseItem;
+import com.project.model.Shop;
 import com.project.service.PersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,25 +17,28 @@ import java.util.List;
 public class ProductDetailController {
     @Autowired
     PersistenceService persistenceService;
-
+    Product product;
     @RequestMapping(method = RequestMethod.GET)
     public String init(@RequestParam String productId,ModelMap modelMap){
 
-        Product product = (Product)persistenceService.read(productId,Product.class);
+        product = (Product)persistenceService.read(productId,Product.class);
         PurchaseItem purchaseItem = new PurchaseItem();
         purchaseItem.setProductPrice(product.getUnitPrice());
-        purchaseItem.setQuantity(1);
         purchaseItem.setName(product.getName());
 
         modelMap.addAttribute("productDetailForm",purchaseItem);
+        List<PurchaseItem> purchaseItems = persistenceService.readAll(PurchaseItem.class);
+        modelMap.addAttribute("purchaseItemList",purchaseItems);
         return "productDetail";
     }
 
-    @RequestMapping(value = "/addBasket",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/addToBasket",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List addToBasket(@RequestBody PurchaseItem purchaseItem){
-        PurchaseItem pr = purchaseItem;
+        purchaseItem.setProductId(product.getId());
+        purchaseItem.setName(product.getName());
+
         persistenceService.create(purchaseItem);
-        return  persistenceService.readAll(PurchaseItem.class);
+        return persistenceService.readAll(PurchaseItem.class);
     }
 }

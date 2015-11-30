@@ -14,24 +14,12 @@ public class PurchaseItem extends SaleItem {
     Float tax;
     Float total;
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
     public Float getProductPrice() {
         return productPrice;
     }
 
     public void setProductPrice(Float productPrice) {
         this.productPrice = productPrice;
-    }
-
-    public void setTax(Float tax) {
-        this.tax = tax;
     }
 
     public Integer getQuantity() {
@@ -46,8 +34,8 @@ public class PurchaseItem extends SaleItem {
         return tax;
     }
 
-    public void setTax() {
-        this.tax = getProductPrice() * getQuantity() * (18 / 100);
+    public void setTax(Float tax) {
+        this.tax = tax;
     }
 
     public Float getTotal() {
@@ -55,6 +43,6 @@ public class PurchaseItem extends SaleItem {
     }
 
     public void setTotal(Float total) {
-        this.total = getProductPrice() * getQuantity() + getTax();
+        this.total = total;
     }
 }
