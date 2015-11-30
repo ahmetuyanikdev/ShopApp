@@ -9,11 +9,14 @@ import com.project.model.SaleItem;
 import com.project.service.PersistenceService;
 import com.project.utility.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -42,10 +45,21 @@ public class SaleItemController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public String init(ModelMap modelMap){
+    public String init(ModelMap modelMap,@RequestParam(required = false) String categoryId){
+
+        if(categoryId!=null){
+            String cId = categoryId;
+            Query query = new Query();
+            query.addCriteria(Criteria.where("categoryId").is(categoryId));
+            saleItems = persistenceService.readByQuery(query,SaleItem.class);
+        }
+        else {
+            saleItems = persistenceService.readAll(SaleItem.class);
+        }
+
         categoryWrappers = categoryHelper.initWrapperList(persistenceService.readAll(Category.class));
         productWrappers = productHelper.initWrapperList(persistenceService.readAll(Product.class));
-        saleItems = persistenceService.readAll(SaleItem.class);
+
         form.setCategoryWrappers(categoryWrappers);
         form.setProductWrappers(productWrappers);
         modelMap.addAttribute("saleItemForm",form);
@@ -70,17 +84,19 @@ public class SaleItemController {
 
                 for (int j = 0; j < form.getProductWrappers().size(); j++) {
 
-                    if(form.getProductWrappers().get(i).selected){
+                    if(form.getProductWrappers().get(j).selected){
                         saleItem = new SaleItem();
                         saleItem.setCategoryId(categoryIdMap.get(i));
-                        saleItem.setProductId(productIdMap.get(i));
+                        saleItem.setProductId(productIdMap.get(j));
                         persistenceService.update(saleItem);
                     }
                 }
             }
         }
 
-
+        saleItems = persistenceService.readAll(SaleItem.class);
+        saleItemWrappers = saleItemHelper.initWrapperList(saleItems,categoryMap,productMap);
+        modelMap.addAttribute("saleItemList",saleItemWrappers);
 
         return "saleItem";
     }

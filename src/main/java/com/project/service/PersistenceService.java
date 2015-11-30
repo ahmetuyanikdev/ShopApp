@@ -3,6 +3,8 @@ package com.project.service;
 import com.project.interfaces.Crud;
 import com.project.model.Shop;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
 
@@ -26,8 +28,12 @@ public class PersistenceService implements Crud {
     }
 
     @Override
-    public Object read(String id, Class cls) {
-        return  mongoOperations.findById(id,cls);
+    public Shop read(String id, Class cls) {
+        return  (Shop)mongoOperations.findById(id,cls);
+    }
+
+    public List readByQuery(Query query,Class cls){
+        return mongoOperations.find(query,cls);
     }
 
     @Override

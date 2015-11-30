@@ -1,9 +1,6 @@
 package com.project.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.UUID;
 
 @Document
 public class PurchaseItem extends SaleItem {
@@ -12,8 +9,8 @@ public class PurchaseItem extends SaleItem {
         super();
     }
 
+    Float productPrice;
     Integer quantity;
-    Float price;
     Float tax;
     Float total;
 
@@ -25,6 +22,18 @@ public class PurchaseItem extends SaleItem {
         this.productId = productId;
     }
 
+    public Float getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(Float productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public void setTax(Float tax) {
+        this.tax = tax;
+    }
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -33,20 +42,12 @@ public class PurchaseItem extends SaleItem {
         this.quantity = quantity;
     }
 
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
-    }
-
     public Float getTax() {
         return tax;
     }
 
-    public void setTax(Float tax) {
-        this.tax = tax;
+    public void setTax() {
+        this.tax = getProductPrice() * getQuantity() * (18 / 100);
     }
 
     public Float getTotal() {
@@ -54,6 +55,6 @@ public class PurchaseItem extends SaleItem {
     }
 
     public void setTotal(Float total) {
-        this.total = total;
+        this.total = getProductPrice() * getQuantity() + getTax();
     }
 }

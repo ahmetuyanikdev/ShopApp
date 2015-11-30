@@ -11,6 +11,6 @@ public interface Crud {
     public void create(Shop obj);
     public void delete(Shop obj);
     public void update(Shop obj);
-    public Object read(String id, Class cls);
+    public Shop read(String id, Class cls);
     public List readAll(Class cls);
 }

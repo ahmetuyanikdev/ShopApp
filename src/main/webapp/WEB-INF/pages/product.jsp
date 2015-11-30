@@ -43,9 +43,7 @@
                     <td>
                         <form:input cssClass="text-input" path="wrappers[${status.index}].product.unitPrice"></form:input>
                     </td>
-                    <td>
-                        <input type="file" name="file">
-                    </td>
+
                 </tr>
             </c:forEach>
 

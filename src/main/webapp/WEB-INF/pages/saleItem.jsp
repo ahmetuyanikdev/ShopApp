@@ -14,11 +14,12 @@
   <div style="width: 90%;margin-left: 5%">
     <a href="${pageContext.request.contextPath}">< Home</a>
     <form:form method="post" action="/ShopApp/saleItem" commandName="saleItemForm">
-      <div style="width: 50%;float: left">
+      <div style="width: 60%;float: left">
         <table class="table">
           <thead>
             <tr>
               <th colspan="2">Category</th>
+              <th colspan="1">Its products ></th>
             </tr>
           </thead>
           <tbody>
@@ -28,14 +29,18 @@
                     <label>${saleItemForm.categoryWrappers[status.index].category.name}</label>
                   </td>
                   <td>
-                    <form:checkbox path="categoryWrappers[${status.index}].selected"></form:checkbox>
+                    <form:checkbox  path="categoryWrappers[${status.index}].selected"></form:checkbox>
+                  </td>
+                  <td>
+                      <a href="${pageContext.request.contextPath}/saleItem?categoryId=${cw.category.id}">list products</a>
                   </td>
               </tr>
             </c:forEach>
           </tbody>
         </table>
+
       </div>
-      <div style="width: 50%;float: left">
+      <div style="width: 40%;float: left">
         <table class="table">
           <thead>
             <tr>
@@ -74,6 +79,9 @@
                 <tr>
                     <td>${sli.category.name}</td>
                     <td>${sli.product.name}</td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/productDetail?productId=${sli.product.id}">product detail ></a>
+                    </td>
                 </tr>
             </c:forEach>
           </tbody>
