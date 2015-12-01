@@ -10,8 +10,9 @@
 </head>
 <body>
     <div style="width: 90%;margin-left: 5%">
-    <a href="${pageContext.request.contextPath}">< Home</a>
-    <h2>${message}</h2>
+    <h3><a href="${pageContext.request.contextPath}">< Home</a></h3>
+    <br>
+    <h2><label class="label label-primary">Add Products</label></h2>
     <form:form method="post" action="/ShopApp/product" modelAttribute="productForm">
         <table class="table">
             <thead>
@@ -31,17 +32,25 @@
             <c:forEach var="w" items="${productForm.wrappers}" varStatus="status">
                 <tr>
                     <td>
-                        <form:input cssClass="text-input" path="wrappers[${status.index}].product.name"></form:input>
-                        <%--<c:if test="${productForm.wrappers[status.index].product.name!=null}">
-                            <c:out value="${productForm.wrappers[status.index].product.name}"></c:out>
-                        </c:if>
                         <c:if test="${productForm.wrappers[status.index].product.name==null}">
-                            New :
-                            <form:input cssClass="text-input" path="wrappers[${status.index}].product.name"></form:input>
-                        </c:if>--%>
+                           <div class="col-md-2" style="float: left">
+                               New :
+                           </div>
+                            <div class="col-md-9" style="float: left">
+                                <form:input cssClass="form-control" path="wrappers[${status.index}].product.name"></form:input>
+                            </div>
+                        </c:if>
+                        <c:if test="${productForm.wrappers[status.index].product.name!=null}">
+                            <div class="col-md-2" style="float: left">
+                                Edit :
+                            </div>
+                            <div class="col-md-9" style="float: left">
+                                <form:input cssClass="form-control" path="wrappers[${status.index}].product.name"></form:input>
+                            </div>
+                        </c:if>
                     </td>
                     <td>
-                        <form:input cssClass="text-input" path="wrappers[${status.index}].product.unitPrice"></form:input>
+                        <form:input cssClass="form-control" path="wrappers[${status.index}].product.unitPrice"></form:input>
                     </td>
 
                 </tr>
@@ -49,7 +58,7 @@
 
             <tr>
                 <td colspan="2">
-                    <input type="submit" class="button" value="Save Product">
+                    <input type="submit" class="btn btn-info" value="Save Product">
                 </td>
             </tr>
         </table>
@@ -71,7 +80,7 @@
                     <c:forEach var="wp" items="${list}" varStatus="status" >
                         <tr>
                             <td>${wp.product.name}</td>
-                            <td>${wp.product.unitPrice}</td>
+                            <td>${wp.product.unitPrice} $</td>
                         </tr>
                     </c:forEach>
                 </tr>

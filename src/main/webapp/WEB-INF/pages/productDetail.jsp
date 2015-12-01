@@ -11,36 +11,39 @@
 
 <body>
 <div style="width: 90%;margin-left: 5%">
-  <a href="${pageContext.request.contextPath}">< Home</a>
-  <div style="width: 60%">
+  <h3><a href="${pageContext.request.contextPath}">< Home</a></h3>
+  <br>
+  <h2><label class="label label-primary">Product Detail</label></h2>
+  <div style="width: 70%">
       <form:form  id="newPurchaseItemForm" method="post" action="/ShopApp/productDetail" commandName="productDetailForm">
           <table class="table">
               <tbody>
               <tr>
-                  <td>Name : <form:input path="name" disabled="true"></form:input></td>
-                  <td>Price : <form:input path="productPrice" disabled="true"></form:input></td>
+                  <td>Name : <form:input  path="name" disabled="true"></form:input></td>
+                  <td>Price : <form:input path="productPrice" disabled="true"></form:input> $</td>
               </tr>
               <tr>
                   <td>
-                      Qty : <form:input path="quantity" onchange="calculateTaxAndTotal()"></form:input>
+                      <div class="col-md-2" style="float: left;">Qty :</div><div class="col-md-9" style="float: left"><form:input cssClass="form-control" path="quantity" onchange="calculateTaxAndTotal()"></form:input></div>
                   </td>
                   <td>
-                      Tax : <form:input path="tax"></form:input>
+                     <div class="col-md-2" style="float: left;">Tax :</div><div class="col-md-9" style="float: left"><form:input cssClass="form-control" path="tax"></form:input></div>$
                   </td>
               </tr>
               <tr>
                   <td colspan="2">
-                      Total : <form:input path="total"></form:input>
+                     <div class="col-md-2" style="float: left"> Total :</div><div class="col-md-9" style="float: left"><form:input cssClass="form-control" path="total"></form:input></div>$
                   </td>
               </tr>
               </tbody>
           </table>
       </form:form>
+
       <input type="button" class="btn btn-info" value="Add to Basket" onclick="addToBasket()">
   </div>
 
   <div>
-
+      <br>
       <table class="table table-bordered" id="purchaseItemData">
           <thead>
             <tr>
@@ -56,9 +59,9 @@
                 <tr>
                     <td><c:out value="${pit.name}"></c:out></td>
                     <td><c:out value="${pit.quantity}"></c:out></td>
-                    <td><c:out value="${pit.productPrice}"></c:out></td>
-                    <td><c:out value="${pit.tax}"></c:out></td>
-                    <td><c:out value="${pit.total}"></c:out></td>
+                    <td><c:out value="${pit.productPrice}"></c:out> $</td>
+                    <td><c:out value="${pit.tax}"></c:out> $</td>
+                    <td><c:out value="${pit.total}"></c:out> $</td>
                 </tr>
               </c:forEach>
           </tbody>
@@ -96,9 +99,9 @@
 
                             var tblRow = "<tr>" + "<td>" + data[i].name + "</td>" +
                                                             "<td>" + data[i].quantity + "</td>" +
-                                                            "<td>" + data[i].productPrice + "</td>" +
-                                                            "<td>" + data[i].tax + "</td>" +
-                                                            "<td>" + data[i].total + "</td>" + "</tr>";
+                                                            "<td>" + data[i].productPrice + " $</td>" +
+                                                            "<td>" + data[i].tax + " $</td>" +
+                                                            "<td>" + data[i].total + " $</td>" + "</tr>";
 
                             $('#purchaseItemData tbody').append(tblRow);
                         });
