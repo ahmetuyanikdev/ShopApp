@@ -15,10 +15,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan(basePackages="com.project.model,com.project.controller")
 public class AppConfig {
 
-    public AppConfig(){
-        System.out.print("hello");
-    }
-
     @Bean
     MongoClient mongoClient() throws Exception{
         return new MongoClient(Constants.MongoDbHost);
