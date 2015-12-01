@@ -55,28 +55,50 @@
         </table>
     </form:form>
     <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Product Name
-                    </th>
-                    <th>
-                        Price
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <c:forEach var="wp" items="${list}" varStatus="status" >
-                        <tr>
-                            <td>${wp.product.name}</td>
-                            <td>${wp.product.unitPrice}</td>
-                        </tr>
-                    </c:forEach>
-                </tr>
-            </tbody>
-        </table>
+        <form:form method="post" modelAttribute="productForm" enctype="multipart/form-data" action="/ShopApp/product/uploadFile">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Product Name
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Select for Upload
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <c:forEach var="prd" items="${productForm.wrappers}" varStatus="status" >
+                            <c:if test="${prd.product.name!=null}">
+                            <tr>
+                                <td>
+                                    <%--<form:input cssClass="text-input" path="wrappers[${status.index}].product.name" disabled="true"></form:input>--%>
+                                    <c:out value="${prd.product.name}"></c:out>
+                                </td>
+                                <td>
+                                    <%--<form:input cssClass="text-input" path="wrappers[${status.index}].product.unitPrice" disabled="true"></form:input>--%>
+                                    <c:out value="${prd.product.unitPrice}"></c:out>
+                                </td>
+                                <td>
+                                    <form:checkbox path="wrappers[${status.index}].selected"></form:checkbox>
+                                </td>
+                            </tr>
+                            </c:if>
+                        </c:forEach>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <td colspan="2"><input type="file" name="file"></td>
+                        <td><input type="submit" class="button" value="Save Files"></td>
+                    </tr>
+                </thead>
+            </table>
+        </form:form>
     </div>
     </div>
 </body>

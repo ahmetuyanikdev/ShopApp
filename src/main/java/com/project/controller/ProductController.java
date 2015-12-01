@@ -10,7 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +30,10 @@ public class ProductController {
     ProductForm form = new ProductForm();
 
     ProductHelper helper = new ProductHelper();
+
     Map<Integer,String> idMap;
+
+    List<Product> products;
 
     @RequestMapping(method = RequestMethod.GET)
     public String init(ModelMap modelMap){
@@ -35,12 +41,12 @@ public class ProductController {
         modelMap.addAttribute("message","Hello");
         ProductWrapper wrapper = new ProductWrapper();
         wrapper.setProduct(product);
-        wrappers = helper.initWrapperList(persistenceService.readAll(Product.class));
-        wrappers.add(0,wrapper);
+        products = persistenceService.readAll(Product.class);
+        wrappers = helper.initWrapperList(products);
+        wrappers.add(0, wrapper);
         form.setWrappers(wrappers);
         idMap = helper.getIdMap(wrappers);
         modelMap.addAttribute("productForm",form);
-        modelMap.addAttribute("list",wrappers);
         return "product";
     }
 
@@ -57,6 +63,31 @@ public class ProductController {
         wrappers = helper.initWrapperList(persistenceService.readAll(Product.class));
         modelMap.addAttribute("list",wrappers);
         return "product";
+    }
+
+    @RequestMapping(value = "/uploadFile",method = RequestMethod.POST)
+    public String uploadFile(@ModelAttribute("productForm") ProductForm form,@RequestParam("file") MultipartFile[] files){
+        try{
+            for (int i = 1; i < form.getWrappers().size() ; i++) {
+                ProductWrapper wrapper = form.getWrappers().get(i);
+
+                if(wrapper.getSelected()){
+
+                    MultipartFile file = files[0];
+                    byte[] bytes = file.getBytes();
+                    InputStream inputStream = new ByteArrayInputStream(bytes);
+                    String productId = products.get(i-1).getId();
+                    persistenceService.storeImgData(inputStream,productId);
+                }
+            }
+        }
+        catch (Exception e){
+
+        }
+        finally {
+            return "product";
+        }
+
     }
 
     @RequestMapping(value = "/getAll",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)

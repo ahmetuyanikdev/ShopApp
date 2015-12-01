@@ -1,16 +1,22 @@
 package com.project.service;
 
+import com.mongodb.gridfs.GridFSDBFile;
 import com.project.interfaces.Crud;
 import com.project.model.Shop;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsOperations;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class PersistenceService implements Crud {
 
     private MongoOperations mongoOperations;
+
+    private GridFsOperations gridFsOperations;
 
     @Override
     public void create(Shop obj) {
@@ -41,11 +47,28 @@ public class PersistenceService implements Crud {
         return mongoOperations.findAll(cls);
     }
 
+    public void storeImgData(InputStream inputStream,String fileName){
+        gridFsOperations.store(inputStream,fileName);
+    }
+
+    public GridFSDBFile retrieveImgData(Query query){
+        return gridFsOperations.findOne(query);
+    }
+
+
     public MongoOperations getMongoOperations() {
         return mongoOperations;
     }
 
     public void setMongoOperations(MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;
+    }
+
+    public GridFsOperations getGridFsOperations() {
+        return gridFsOperations;
+    }
+
+    public void setGridFsOperations(GridFsOperations gridFsOperations) {
+        this.gridFsOperations = gridFsOperations;
     }
 }

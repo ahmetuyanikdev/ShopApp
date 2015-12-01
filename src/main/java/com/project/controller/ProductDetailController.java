@@ -1,10 +1,13 @@
 package com.project.controller;
 
+import com.mongodb.gridfs.GridFSDBFile;
 import com.project.model.Product;
 import com.project.model.PurchaseItem;
 import com.project.model.Shop;
 import com.project.service.PersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +24,10 @@ public class ProductDetailController {
     @RequestMapping(method = RequestMethod.GET)
     public String init(@RequestParam String productId,ModelMap modelMap){
 
+        Query query = new Query();
+        query.addCriteria(Criteria.where("filename").is(productId));
+        GridFSDBFile gridFSDBFile=persistenceService.retrieveImgData(query);
+
         product = (Product)persistenceService.read(productId,Product.class);
         PurchaseItem purchaseItem = new PurchaseItem();
         purchaseItem.setProductPrice(product.getUnitPrice());
@@ -35,9 +42,9 @@ public class ProductDetailController {
     @RequestMapping(value = "/addToBasket",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List addToBasket(@RequestBody PurchaseItem purchaseItem){
+
         purchaseItem.setProductId(product.getId());
         purchaseItem.setName(product.getName());
-
         persistenceService.create(purchaseItem);
         return persistenceService.readAll(PurchaseItem.class);
     }
