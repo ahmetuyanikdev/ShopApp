@@ -29,7 +29,7 @@
     <h3><a href="${pageContext.request.contextPath}">< Home</a></h3>
     <br>
     <h2><label class="label label-primary">Add Categories</label></h2>
-    <form:form method="post" action="/ShopApp/category" commandName="categoryForm">
+    <form:form method="post" action="${pageContext.request.contextPath}/category" commandName="categoryForm">
 
             <table class="table">
                 <thead>

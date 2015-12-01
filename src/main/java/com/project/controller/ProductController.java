@@ -65,31 +65,6 @@ public class ProductController {
         return "product";
     }
 
-    @RequestMapping(value = "/uploadFile",method = RequestMethod.POST)
-    public String uploadFile(@ModelAttribute("productForm") ProductForm form,@RequestParam("file") MultipartFile[] files){
-        try{
-            for (int i = 1; i < form.getWrappers().size() ; i++) {
-                ProductWrapper wrapper = form.getWrappers().get(i);
-
-                if(wrapper.getSelected()){
-
-                    MultipartFile file = files[0];
-                    byte[] bytes = file.getBytes();
-                    InputStream inputStream = new ByteArrayInputStream(bytes);
-                    String productId = products.get(i-1).getId();
-                    persistenceService.storeImgData(inputStream,productId);
-                }
-            }
-        }
-        catch (Exception e){
-
-        }
-        finally {
-            return "product";
-        }
-
-    }
-
     @RequestMapping(value = "/getAll",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List findAll(ModelMap modelMap){

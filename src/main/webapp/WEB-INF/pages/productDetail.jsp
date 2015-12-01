@@ -15,7 +15,7 @@
   <br>
   <h2><label class="label label-primary">Product Detail</label></h2>
   <div style="width: 70%">
-      <form:form  id="newPurchaseItemForm" method="post" action="/ShopApp/productDetail" commandName="productDetailForm">
+      <form:form  id="newPurchaseItemForm" method="post" action="${pageContext.request.contextPath}/productDetail" commandName="productDetailForm">
           <table class="table">
               <tbody>
               <tr>

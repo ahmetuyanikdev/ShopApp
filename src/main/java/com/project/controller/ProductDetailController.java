@@ -25,10 +25,6 @@ public class ProductDetailController {
     @RequestMapping(method = RequestMethod.GET)
     public String init(@RequestParam String productId,ModelMap modelMap){
 
-        Query query = new Query();
-        query.addCriteria(Criteria.where("filename").is(productId));
-        GridFSDBFile gridFSDBFile=persistenceService.retrieveImgData(query);
-
         product = (Product)persistenceService.read(productId,Product.class);
         PurchaseItem purchaseItem = new PurchaseItem();
         purchaseItem.setProductPrice(product.getUnitPrice());

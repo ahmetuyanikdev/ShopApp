@@ -6,10 +6,12 @@ import com.project.utility.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+@Import(MongoConfig.class)
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages="com.project.model,com.project.controller")
