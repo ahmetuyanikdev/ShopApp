@@ -10,8 +10,9 @@
 </head>
 <body>
     <div style="width: 90%;margin-left: 5%">
-    <a href="${pageContext.request.contextPath}">< Home</a>
-    <h2>${message}</h2>
+    <h3><a href="${pageContext.request.contextPath}">< Home</a></h3>
+    <br>
+    <h2><label class="label label-primary">Add Products</label></h2>
     <form:form method="post" action="/ShopApp/product" modelAttribute="productForm">
         <table class="table">
             <thead>
@@ -31,17 +32,25 @@
             <c:forEach var="w" items="${productForm.wrappers}" varStatus="status">
                 <tr>
                     <td>
-                        <form:input cssClass="text-input" path="wrappers[${status.index}].product.name"></form:input>
-                        <%--<c:if test="${productForm.wrappers[status.index].product.name!=null}">
-                            <c:out value="${productForm.wrappers[status.index].product.name}"></c:out>
-                        </c:if>
                         <c:if test="${productForm.wrappers[status.index].product.name==null}">
-                            New :
-                            <form:input cssClass="text-input" path="wrappers[${status.index}].product.name"></form:input>
-                        </c:if>--%>
+                           <div class="col-md-2" style="float: left">
+                               New :
+                           </div>
+                            <div class="col-md-9" style="float: left">
+                                <form:input cssClass="form-control" path="wrappers[${status.index}].product.name"></form:input>
+                            </div>
+                        </c:if>
+                        <c:if test="${productForm.wrappers[status.index].product.name!=null}">
+                            <div class="col-md-2" style="float: left">
+                                Edit :
+                            </div>
+                            <div class="col-md-9" style="float: left">
+                                <form:input cssClass="form-control" path="wrappers[${status.index}].product.name"></form:input>
+                            </div>
+                        </c:if>
                     </td>
                     <td>
-                        <form:input cssClass="text-input" path="wrappers[${status.index}].product.unitPrice"></form:input>
+                        <form:input cssClass="form-control" path="wrappers[${status.index}].product.unitPrice"></form:input>
                     </td>
 
                 </tr>
@@ -49,56 +58,34 @@
 
             <tr>
                 <td colspan="2">
-                    <input type="submit" class="button" value="Save Product">
+                    <input type="submit" class="btn btn-info" value="Save Product">
                 </td>
             </tr>
         </table>
     </form:form>
     <div>
-        <form:form method="post" modelAttribute="productForm" enctype="multipart/form-data" action="/ShopApp/product/uploadFile">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            Product Name
-                        </th>
-                        <th>
-                            Price
-                        </th>
-                        <th>
-                            Select for Upload
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <c:forEach var="prd" items="${productForm.wrappers}" varStatus="status" >
-                            <c:if test="${prd.product.name!=null}">
-                            <tr>
-                                <td>
-                                    <%--<form:input cssClass="text-input" path="wrappers[${status.index}].product.name" disabled="true"></form:input>--%>
-                                    <c:out value="${prd.product.name}"></c:out>
-                                </td>
-                                <td>
-                                    <%--<form:input cssClass="text-input" path="wrappers[${status.index}].product.unitPrice" disabled="true"></form:input>--%>
-                                    <c:out value="${prd.product.unitPrice}"></c:out>
-                                </td>
-                                <td>
-                                    <form:checkbox path="wrappers[${status.index}].selected"></form:checkbox>
-                                </td>
-                            </tr>
-                            </c:if>
-                        </c:forEach>
-                    </tr>
-                </tbody>
-                <thead>
-                    <tr>
-                        <td colspan="2"><input type="file" name="file"></td>
-                        <td><input type="submit" class="button" value="Save Files"></td>
-                    </tr>
-                </thead>
-            </table>
-        </form:form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Product Name
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <c:forEach var="wp" items="${list}" varStatus="status" >
+                        <tr>
+                            <td>${wp.product.name}</td>
+                            <td>${wp.product.unitPrice} $</td>
+                        </tr>
+                    </c:forEach>
+                </tr>
+            </tbody>
+        </table>
     </div>
     </div>
 </body>

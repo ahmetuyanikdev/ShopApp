@@ -21,6 +21,7 @@ public class ProductDetailController {
     @Autowired
     PersistenceService persistenceService;
     Product product;
+
     @RequestMapping(method = RequestMethod.GET)
     public String init(@RequestParam String productId,ModelMap modelMap){
 

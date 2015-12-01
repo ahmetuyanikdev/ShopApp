@@ -26,8 +26,9 @@
 </script>
 <body>
     <div style="width: 90%;margin-left: 5%;">
-    <a href="${pageContext.request.contextPath}">< Home</a>
-    <h1>${message}</h1>
+    <h3><a href="${pageContext.request.contextPath}">< Home</a></h3>
+    <br>
+    <h2><label class="label label-primary">Add Categories</label></h2>
     <form:form method="post" action="/ShopApp/category" commandName="categoryForm">
 
             <table class="table">
@@ -36,9 +37,6 @@
                     <th>
                         Category Name
                     </th>
-                    <th>
-                        Select
-                    </th>
                 </tr>
                 </thead>
 
@@ -46,11 +44,11 @@
                 <c:forEach var="w" items="${categoryForm.wrappers}" varStatus="status">
                     <tr>
                         <td>
-                            <form:input cssClass="text-input" path="wrappers[${status.index}].category.name"></form:input>
-                        </td>
-                        <td>
+                            <c:if test="${categoryForm.wrappers[status.index].category.name==null}">
+                              <div class="col-md-1" style="float: left"> New : </div> <div style="float: left" class="col-md-9"><form:input cssClass="form-control" path="wrappers[${status.index}].category.name"></form:input></div>
+                            </c:if>
                             <c:if test="${categoryForm.wrappers[status.index].category.name!=null}">
-                                <form:checkbox path="wrappers[${status.index}].selected"></form:checkbox>
+                              <div class="col-md-1" style="float:left"> Edit :</div> <div style="float: left" class="col-md-9"><form:input cssClass="form-control" path="wrappers[${status.index}].category.name"></form:input></div>
                             </c:if>
                         </td>
                     </tr>
@@ -59,7 +57,7 @@
 
                 <tfoot>
                 <tr>
-                    <td colspan="2"><input type="submit" class="button" value="Save Category"></td>
+                    <td colspan="2"><input type="submit" class="btn btn-info" value="Save Category"></td>
                 </tr>
 
                <%-- <tr>
@@ -73,7 +71,7 @@
         <table class="table">
             <thead>
                 <th>
-                    Category Name
+                    Categories
                 </th>
             </thead>
             <tbody>

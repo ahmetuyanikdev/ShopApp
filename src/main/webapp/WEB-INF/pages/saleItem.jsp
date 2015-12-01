@@ -12,14 +12,17 @@
 
 <body>
   <div style="width: 90%;margin-left: 5%">
-    <a href="${pageContext.request.contextPath}">< Home</a>
-    <form:form method="post" action="/ShopApp/saleItem" commandName="saleItemForm">
-      <div style="width: 60%;float: left">
+    <h3><a href="${pageContext.request.contextPath}">< Home</a></h3>
+    <br>
+    <h2><label class="label label-primary">Create Many to Many Sale Items</label></h2>
+    <form:form method="post" action="${pageContext.request.contextPath}/saleItem" commandName="saleItemForm">
+      <div style="width: 50%;float: left" class="alert alert-success">
         <table class="table">
           <thead>
             <tr>
-              <th colspan="2">Category</th>
-              <th colspan="1">Its products ></th>
+              <th colspan="1">Categories</th>
+              <th colspan="1">Related products ></th>
+              <th colspan="1">Select</th>
             </tr>
           </thead>
           <tbody>
@@ -29,22 +32,25 @@
                     <label>${saleItemForm.categoryWrappers[status.index].category.name}</label>
                   </td>
                   <td>
-                    <form:checkbox  path="categoryWrappers[${status.index}].selected"></form:checkbox>
+                      <a href="${pageContext.request.contextPath}/saleItem?categoryId=${cw.category.id}">list products</a>
                   </td>
                   <td>
-                      <a href="${pageContext.request.contextPath}/saleItem?categoryId=${cw.category.id}">list products</a>
+                    <form:checkbox  path="categoryWrappers[${status.index}].selected"></form:checkbox>
                   </td>
               </tr>
             </c:forEach>
           </tbody>
         </table>
-
+          <div style="text-align: right">
+              <input type="submit" class="btn btn-info" value="Save SaleItem">
+          </div>
       </div>
-      <div style="width: 40%;float: left">
+      <div style="width: 40%;float: left" class="alert alert-warning">
         <table class="table">
           <thead>
             <tr>
-                <th colspan="2">Product</th>
+                <th colspan="1">Product</th>
+                <th colspan="1">Select</th>
             </tr>
           </thead>
           <tbody>
@@ -60,18 +66,17 @@
             </c:forEach>
           </tbody>
         </table>
-          <br>
-        <input type="submit" class="button" value="Save SaleItem">
       </div>
     </form:form>
     <hr>
     <div style="width: 60%">
-        <h2>SaleItems : Categories and related Product</h2>
+        <h2>SaleItems : Categories and related Products</h2>
         <table class="table">
           <thead>
               <tr>
                   <th>Category</th>
                   <th>Product</th>
+                  <th>Price</th>
               </tr>
           </thead>
           <tbody>
@@ -79,6 +84,7 @@
                 <tr>
                     <td>${sli.category.name}</td>
                     <td>${sli.product.name}</td>
+                    <td>${sli.product.unitPrice} $</td>
                     <td>
                         <a href="${pageContext.request.contextPath}/productDetail?productId=${sli.product.id}">product detail ></a>
                     </td>
