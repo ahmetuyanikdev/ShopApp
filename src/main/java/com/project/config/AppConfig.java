@@ -22,7 +22,7 @@ public class AppConfig {
 
     @Bean
     MongoOperations mongoOperations(MongoClient mongoClient){
-        return new MongoTemplate(mongoClient,Constants.MongoDbTable);
+        return new MongoTemplate(mongoClient,Constants.MongoDatabase);
     }
 
     @Bean
