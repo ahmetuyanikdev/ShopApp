@@ -16,8 +16,6 @@ public class PersistenceService implements Crud {
 
     private MongoOperations mongoOperations;
 
-    private GridFsOperations gridFsOperations;
-
     @Override
     public void create(Shop obj) {
         mongoOperations.insert(obj);
@@ -47,28 +45,11 @@ public class PersistenceService implements Crud {
         return mongoOperations.findAll(cls);
     }
 
-    public void storeImgData(InputStream inputStream,String fileName){
-        gridFsOperations.store(inputStream,fileName);
-    }
-
-    public GridFSDBFile retrieveImgData(Query query){
-        return gridFsOperations.findOne(query);
-    }
-
-
-    public MongoOperations getMongoOperations() {
-        return mongoOperations;
-    }
-
     public void setMongoOperations(MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;
     }
 
-    public GridFsOperations getGridFsOperations() {
-        return gridFsOperations;
-    }
 
-    public void setGridFsOperations(GridFsOperations gridFsOperations) {
-        this.gridFsOperations = gridFsOperations;
-    }
+
+
 }

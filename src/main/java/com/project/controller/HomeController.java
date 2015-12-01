@@ -11,7 +11,7 @@ public class HomeController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String printWellCome(ModelMap modelMap){
-        modelMap.addAttribute("message","Hello Dear..");
+        modelMap.addAttribute("message",".Welcome to ShopApp");
         return "index";
     }
 

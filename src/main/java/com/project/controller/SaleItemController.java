@@ -29,15 +29,17 @@ public class SaleItemController {
     @Autowired
     PersistenceService persistenceService;
 
-    List<CategoryWrapper> categoryWrappers = new LinkedList<CategoryWrapper>();
-    List<ProductWrapper> productWrappers = new LinkedList<ProductWrapper>();
+    @Autowired
+    CategoryHelper categoryHelper;
+
+    @Autowired
+    ProductHelper productHelper;
+
+    @Autowired
+    SaleItemHelper saleItemHelper;
+
     List<SaleItem> saleItems = new LinkedList<SaleItem>();
     List<SaleItemWrapper> saleItemWrappers = new LinkedList<SaleItemWrapper>();
-
-    SaleItemForm form = new SaleItemForm();
-    CategoryHelper categoryHelper  = new CategoryHelper();
-    ProductHelper productHelper =  new ProductHelper();
-    SaleItemHelper saleItemHelper = new SaleItemHelper();
     Map<Integer,String> categoryIdMap;
     Map<Integer,String> productIdMap;
     Map<String,Category> categoryMap;
@@ -46,6 +48,10 @@ public class SaleItemController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String init(ModelMap modelMap,@RequestParam(required = false) String categoryId){
+        List<CategoryWrapper> categoryWrappers = new LinkedList<CategoryWrapper>();
+        List<ProductWrapper> productWrappers = new LinkedList<ProductWrapper>();
+
+        SaleItemForm form = new SaleItemForm();
 
         if(categoryId!=null){
             String cId = categoryId;

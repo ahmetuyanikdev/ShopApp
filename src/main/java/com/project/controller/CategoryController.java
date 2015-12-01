@@ -25,24 +25,25 @@ public class CategoryController{
     @Autowired
     PersistenceService persistenceService;
 
-    List<CategoryWrapper> wrappers = new LinkedList<CategoryWrapper>();
+    @Autowired
+    CategoryHelper categoryHelper;
 
-    CategoryForm form = new CategoryForm();
+    List<CategoryWrapper> wrappers;
 
-    CategoryHelper helper = new CategoryHelper();
     Map<Integer,String> idMap;
 
     @RequestMapping(method = RequestMethod.GET)
     public String init(ModelMap modelMap){
 
+        CategoryForm form = new CategoryForm();
         Category category =  new Category();
         CategoryWrapper wrapper = new CategoryWrapper();
         wrapper.setCategory(category);
         modelMap.addAttribute("message","Hi..");
-        wrappers = helper.initWrapperList(persistenceService.readAll(Category.class));
+        wrappers = categoryHelper.initWrapperList(persistenceService.readAll(Category.class));
         wrappers.add(0,wrapper);
         form.setWrappers(wrappers);
-        idMap = helper.getIdMap(wrappers);
+        idMap = categoryHelper.getIdMap(wrappers);
         modelMap.addAttribute("categoryForm",form);
         modelMap.addAttribute("list",wrappers);
         return "category";
@@ -58,7 +59,7 @@ public class CategoryController{
                 persistenceService.update(category);
             }
         }
-        wrappers = helper.initWrapperList(persistenceService.readAll(Category.class));
+        wrappers = categoryHelper.initWrapperList(persistenceService.readAll(Category.class));
         modelMap.addAttribute("list",wrappers);
         return "category";
     }

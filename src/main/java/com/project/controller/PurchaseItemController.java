@@ -22,7 +22,8 @@ public class PurchaseItemController {
     @Autowired
     PersistenceService persistenceService;
 
-    PurchaseItemHelper purchaseItemHelper = new PurchaseItemHelper();
+    @Autowired
+    PurchaseItemHelper purchaseItemHelper;
 
     List<PurchaseItem> purchaseItems;
 

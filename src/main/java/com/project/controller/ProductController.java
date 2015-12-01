@@ -10,10 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -25,27 +22,25 @@ public class ProductController {
     @Autowired
     PersistenceService persistenceService;
 
-    List<ProductWrapper> wrappers = new LinkedList<ProductWrapper>();
+    @Autowired
+    ProductHelper productHelper;
 
-    ProductForm form = new ProductForm();
-
-    ProductHelper helper = new ProductHelper();
+    List<ProductWrapper> wrappers;
 
     Map<Integer,String> idMap;
 
-    List<Product> products;
-
     @RequestMapping(method = RequestMethod.GET)
     public String init(ModelMap modelMap){
+        List<Product> products=new LinkedList<Product>();
+        ProductForm form = new ProductForm();
         Product product = new Product();
-        modelMap.addAttribute("message","Hello");
         ProductWrapper wrapper = new ProductWrapper();
         wrapper.setProduct(product);
         products = persistenceService.readAll(Product.class);
-        wrappers = helper.initWrapperList(products);
+        wrappers = productHelper.initWrapperList(products);
         wrappers.add(0, wrapper);
         form.setWrappers(wrappers);
-        idMap = helper.getIdMap(wrappers);
+        idMap = productHelper.getIdMap(wrappers);
         modelMap.addAttribute("productForm",form);
         return "product";
     }
@@ -60,7 +55,7 @@ public class ProductController {
                 persistenceService.update(prd);
             }
         }
-        wrappers = helper.initWrapperList(persistenceService.readAll(Product.class));
+        wrappers = productHelper.initWrapperList(persistenceService.readAll(Product.class));
         modelMap.addAttribute("list",wrappers);
         return "product";
     }

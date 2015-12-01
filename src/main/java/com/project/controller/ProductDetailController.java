@@ -20,6 +20,7 @@ import java.util.List;
 public class ProductDetailController {
     @Autowired
     PersistenceService persistenceService;
+
     Product product;
 
     @RequestMapping(method = RequestMethod.GET)

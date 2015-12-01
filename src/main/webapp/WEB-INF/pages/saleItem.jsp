@@ -5,10 +5,17 @@
 <html>
 <head>
     <title>Sale Item</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
 </head>
 <script  type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js">
 </script>
+<style>
+    .listDiv{
+        overflow-y: auto;
+        height: 450px;
+    }
+</style>
 
 <body>
   <div style="width: 90%;margin-left: 5%">
@@ -16,7 +23,7 @@
     <br>
     <h2><label class="label label-primary">Create Many to Many Sale Items</label></h2>
     <form:form method="post" action="${pageContext.request.contextPath}/saleItem" commandName="saleItemForm">
-      <div style="width: 50%;float: left" class="alert alert-success">
+      <div style="width: 50%;float: left" class="alert alert-success listDiv">
         <table class="table">
           <thead>
             <tr>
@@ -45,11 +52,12 @@
               <input type="submit" class="btn btn-info" value="Save SaleItem">
           </div>
       </div>
-      <div style="width: 40%;float: left" class="alert alert-warning">
+      <div style="width: 45%;float: left" class="alert alert-warning listDiv">
         <table class="table">
           <thead>
             <tr>
                 <th colspan="1">Product</th>
+                <th colspan="1">Price</th>
                 <th colspan="1">Select</th>
             </tr>
           </thead>
@@ -59,6 +67,7 @@
                 <td>
                   <label>${saleItemForm.productWrappers[status.index].product.name}</label>
                 </td>
+                  <td>${saleItemForm.productWrappers[status.index].product.unitPrice} $</td>
                 <td>
                   <form:checkbox path="productWrappers[${status.index}].selected"></form:checkbox>
                 </td>

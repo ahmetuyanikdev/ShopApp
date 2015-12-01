@@ -14,7 +14,7 @@
 <script>
     function getAllCategory() {
         $.ajax({
-            url : '/ShopApp/category/getAll',
+            url : '${pageContext.request.contextPath}/category/getAll',
             success : function(data) {
                 $.each(data, function(i, f) {
                     var tblRow = "<tr>" + "<td>" + data[i].name + "</td>" +"</tr>";
