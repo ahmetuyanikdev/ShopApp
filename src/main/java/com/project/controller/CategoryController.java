@@ -26,9 +26,9 @@ public class CategoryController{
     PersistenceService persistenceService;
 
     @Autowired
-    CategoryHelper categoryHelper;
+    public CategoryHelper categoryHelper;
 
-    List<CategoryWrapper> wrappers;
+    public List<CategoryWrapper> wrappers;
 
     Map<Integer,String> idMap;
 
@@ -53,11 +53,17 @@ public class CategoryController{
     public String insert(@ModelAttribute("categoryForm") CategoryForm form,ModelMap modelMap){
 
         for (int i = 0; i <form.getWrappers().size(); i++) {
+
             Category category = form.getWrappers().get(i).getCategory();
-            if(!category.getName().equals("")){
-                category.setId(idMap.get(i));
-                persistenceService.update(category);
+
+            if(category.getName()!=null){
+
+                if(!category.getName().equals("")){
+                    category.setId(idMap.get(i));
+                    persistenceService.update(category);
+                }
             }
+
         }
         wrappers = categoryHelper.initWrapperList(persistenceService.readAll(Category.class));
         modelMap.addAttribute("list",wrappers);
@@ -68,5 +74,13 @@ public class CategoryController{
     @ResponseBody
     public List findAll(ModelMap modelMap){
         return persistenceService.readAll(Category.class);
+    }
+
+    public PersistenceService getPersistenceService() {
+        return persistenceService;
+    }
+
+    public void setPersistenceService(PersistenceService persistenceService) {
+        this.persistenceService = persistenceService;
     }
 }

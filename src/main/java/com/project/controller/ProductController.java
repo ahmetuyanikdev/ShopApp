@@ -23,9 +23,9 @@ public class ProductController {
     PersistenceService persistenceService;
 
     @Autowired
-    ProductHelper productHelper;
+    public ProductHelper productHelper;
 
-    List<ProductWrapper> wrappers;
+    public List<ProductWrapper> wrappers;
 
     Map<Integer,String> idMap;
 
@@ -50,9 +50,13 @@ public class ProductController {
 
         for (int i = 0; i <form.getWrappers().size() ; i++) {
             Product prd = form.getWrappers().get(i).getProduct();
-            if(!prd.getName().equals("")){
-                prd.setId(idMap.get(i));
-                persistenceService.update(prd);
+            if(prd.getName()!=null){
+
+                if(!prd.getName().equals("")){
+                    prd.setId(idMap.get(i));
+                    persistenceService.update(prd);
+                }
+
             }
         }
         wrappers = productHelper.initWrapperList(persistenceService.readAll(Product.class));
@@ -66,4 +70,11 @@ public class ProductController {
         return persistenceService.readAll(Product.class);
     }
 
+    public PersistenceService getPersistenceService() {
+        return persistenceService;
+    }
+
+    public void setPersistenceService(PersistenceService persistenceService) {
+        this.persistenceService = persistenceService;
+    }
 }

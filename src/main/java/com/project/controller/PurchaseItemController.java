@@ -23,7 +23,7 @@ public class PurchaseItemController {
     PersistenceService persistenceService;
 
     @Autowired
-    PurchaseItemHelper purchaseItemHelper;
+    public PurchaseItemHelper purchaseItemHelper;
 
     List<PurchaseItem> purchaseItems;
 
@@ -56,4 +56,11 @@ public class PurchaseItemController {
         return "purchase";
     }
 
+    public PersistenceService getPersistenceService() {
+        return persistenceService;
+    }
+
+    public void setPersistenceService(PersistenceService persistenceService) {
+        this.persistenceService = persistenceService;
+    }
 }

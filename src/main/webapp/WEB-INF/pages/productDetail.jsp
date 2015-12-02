@@ -14,7 +14,7 @@
   <h3><a href="${pageContext.request.contextPath}">< Home</a></h3>
   <br>
   <h2><label class="label label-primary">Product Detail</label></h2>
-  <div style="width: 70%">
+  <div style="width: 70%;float: left" class="alert alert-success">
       <form:form  id="newPurchaseItemForm" method="post" action="${pageContext.request.contextPath}/productDetail" commandName="productDetailForm">
           <table class="table">
               <tbody>
@@ -24,15 +24,18 @@
               </tr>
               <tr>
                   <td>
-                      <div class="col-md-2" style="float: left;">Qty :</div><div class="col-md-9" style="float: left"><form:input cssClass="form-control" path="quantity" onchange="calculateTaxAndTotal()"></form:input></div>
+                     Quantity <div class="col-md-10" style="float: right"><form:input cssClass="form-control" path="quantity" onchange="calculateTaxAndTotal()"></form:input></div>
                   </td>
                   <td>
-                     <div class="col-md-2" style="float: left;">Tax :</div><div class="col-md-9" style="float: left"><form:input cssClass="form-control" path="tax"></form:input></div>$
+                     Tax <div class="col-md-10" style="float: right"><form:input path="tax"></form:input>$</div>
                   </td>
               </tr>
               <tr>
-                  <td colspan="2">
-                     <div class="col-md-2" style="float: left"> Total :</div><div class="col-md-9" style="float: left"><form:input cssClass="form-control" path="total"></form:input></div>$
+                  <td>
+                     Total <div class="col-md-10" style="float: right"><form:input  path="total"></form:input>$</div>
+                  </td>
+                  <td>
+
                   </td>
               </tr>
               </tbody>
@@ -40,6 +43,9 @@
       </form:form>
 
       <input type="button" class="btn btn-info" value="Add to Basket" onclick="addToBasket()">
+  </div>
+  <div style="width: 30%;float: left">
+
   </div>
 
   <div>

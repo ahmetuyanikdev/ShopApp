@@ -1,13 +1,10 @@
 package com.project.controller;
 
-import com.mongodb.gridfs.GridFSDBFile;
 import com.project.model.Product;
 import com.project.model.PurchaseItem;
-import com.project.model.Shop;
 import com.project.service.PersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -45,5 +42,13 @@ public class ProductDetailController {
         purchaseItem.setName(product.getName());
         persistenceService.create(purchaseItem);
         return persistenceService.readAll(PurchaseItem.class);
+    }
+
+    public PersistenceService getPersistenceService() {
+        return persistenceService;
+    }
+
+    public void setPersistenceService(PersistenceService persistenceService) {
+        this.persistenceService = persistenceService;
     }
 }

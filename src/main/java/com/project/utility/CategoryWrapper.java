@@ -5,9 +5,6 @@ import com.project.model.Product;
 
 import java.util.List;
 
-/**
- * Created by ahmet on 28/11/15.
- */
 public class CategoryWrapper extends BaseWrapper {
 
     public Category category;

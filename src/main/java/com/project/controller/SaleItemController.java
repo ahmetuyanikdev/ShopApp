@@ -30,16 +30,18 @@ public class SaleItemController {
     PersistenceService persistenceService;
 
     @Autowired
-    CategoryHelper categoryHelper;
+    public CategoryHelper categoryHelper;
 
     @Autowired
-    ProductHelper productHelper;
+    public ProductHelper productHelper;
 
     @Autowired
-    SaleItemHelper saleItemHelper;
+    public SaleItemHelper saleItemHelper;
 
-    List<SaleItem> saleItems = new LinkedList<SaleItem>();
-    List<SaleItemWrapper> saleItemWrappers = new LinkedList<SaleItemWrapper>();
+    List<SaleItem> saleItems;
+    public List<SaleItemWrapper> saleItemWrappers;
+    public List<CategoryWrapper> categoryWrappers;
+    public List<ProductWrapper> productWrappers;
     Map<Integer,String> categoryIdMap;
     Map<Integer,String> productIdMap;
     Map<String,Category> categoryMap;
@@ -48,8 +50,6 @@ public class SaleItemController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String init(ModelMap modelMap,@RequestParam(required = false) String categoryId){
-        List<CategoryWrapper> categoryWrappers = new LinkedList<CategoryWrapper>();
-        List<ProductWrapper> productWrappers = new LinkedList<ProductWrapper>();
 
         SaleItemForm form = new SaleItemForm();
 
@@ -102,9 +102,17 @@ public class SaleItemController {
 
         saleItems = persistenceService.readAll(SaleItem.class);
         saleItemWrappers = saleItemHelper.initWrapperList(saleItems,categoryMap,productMap);
+        modelMap.addAttribute("saleItemForm",form);
         modelMap.addAttribute("saleItemList",saleItemWrappers);
 
         return "saleItem";
     }
 
+    public PersistenceService getPersistenceService() {
+        return persistenceService;
+    }
+
+    public void setPersistenceService(PersistenceService persistenceService) {
+        this.persistenceService = persistenceService;
+    }
 }

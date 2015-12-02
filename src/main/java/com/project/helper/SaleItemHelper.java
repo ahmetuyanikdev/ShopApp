@@ -4,10 +4,8 @@ package com.project.helper;
 import com.project.model.Category;
 import com.project.model.Product;
 import com.project.model.SaleItem;
-import com.project.service.PersistenceService;
 import com.project.utility.SaleItemWrapper;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;

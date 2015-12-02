@@ -36,7 +36,8 @@
             <c:forEach var="cw" items="${saleItemForm.categoryWrappers}" varStatus="status">
               <tr>
                   <td>
-                    <label>${saleItemForm.categoryWrappers[status.index].category.name}</label>
+                      <form:input cssClass="form-control" path="categoryWrappers[${status.index}].category.name"></form:input>
+                    <%--<label>${saleItemForm.categoryWrappers[status.index].category.name}</label>--%>
                   </td>
                   <td>
                       <a href="${pageContext.request.contextPath}/saleItem?categoryId=${cw.category.id}">list products</a>
@@ -65,7 +66,8 @@
             <c:forEach var="pw" items="${saleItemForm.productWrappers}" varStatus="status">
               <tr>
                 <td>
-                  <label>${saleItemForm.productWrappers[status.index].product.name}</label>
+                  <%--<label>${saleItemForm.productWrappers[status.index].product.name}</label>--%>
+                  <form:input path="productWrappers[${status.index}].product.name"></form:input>
                 </td>
                   <td>${saleItemForm.productWrappers[status.index].product.unitPrice} $</td>
                 <td>

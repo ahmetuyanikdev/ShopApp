@@ -1,34 +1,28 @@
-package com.project.config;
+package com.project;
 
-import com.mongodb.MongoClient;
+import com.project.controller.*;
 import com.project.helper.CategoryHelper;
 import com.project.helper.ProductHelper;
 import com.project.helper.PurchaseItemHelper;
 import com.project.helper.SaleItemHelper;
 import com.project.service.PersistenceService;
-import com.project.utility.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@Import(MongoConfig.class)
 @Configuration
-@EnableWebMvc
-@ComponentScan(basePackages="com.project.model,com.project.controller")
-public class AppConfig {
+public class MongoTestConfig {
 
-    @Autowired
-    MongoOperations mongoOperations;
+    @Bean
+    MongoOperations mongoOperations(){
+        return Mockito.mock(MongoOperations.class);
+    }
 
     @Bean
     PersistenceService persistenceService(){
         PersistenceService persistenceService = new PersistenceService();
-        persistenceService.setMongoOperations(mongoOperations);
+        persistenceService.setMongoOperations(mongoOperations());
         return persistenceService;
     }
 
@@ -51,5 +45,8 @@ public class AppConfig {
     SaleItemHelper saleItemHelper(){
         return new SaleItemHelper();
     }
+
+
+
 
 }

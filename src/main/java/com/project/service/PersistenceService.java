@@ -49,7 +49,7 @@ public class PersistenceService implements Crud {
         this.mongoOperations = mongoOperations;
     }
 
-
-
-
+    public MongoOperations getMongoOperations() {
+        return mongoOperations;
+    }
 }
