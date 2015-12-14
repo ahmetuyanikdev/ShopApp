@@ -24,20 +24,20 @@
               </tr>
               <tr>
                   <td>
-                     Quantity <div class="col-md-10" style="float: right"><form:input cssClass="form-control" path="quantity" onchange="calculateTaxAndTotal()"></form:input></div>
+                     Quantity <div class="col-md-10" style="float: right"><form:input cssClass="form-control" path="quantity" ></form:input></div>
                   </td>
-                  <td>
+                  <%--<td>
                      Tax <div class="col-md-10" style="float: right"><form:input path="tax"></form:input>$</div>
-                  </td>
+                  </td>--%>
               </tr>
-              <tr>
+              <%--<tr>
                   <td>
                      Total <div class="col-md-10" style="float: right"><form:input  path="total"></form:input>$</div>
                   </td>
                   <td>
 
                   </td>
-              </tr>
+              </tr>--%>
               </tbody>
           </table>
       </form:form>
@@ -56,8 +56,6 @@
                 <th>Name</th>
                 <th>Quantity</th>
                 <th>Product Price</th>
-                <th>Tax</th>
-                <th>Total</th>
             </tr>
           </thead>
           <tbody>
@@ -66,8 +64,6 @@
                     <td><c:out value="${pit.name}"></c:out></td>
                     <td><c:out value="${pit.quantity}"></c:out></td>
                     <td><c:out value="${pit.productPrice}"></c:out> $</td>
-                    <td><c:out value="${pit.tax}"></c:out> $</td>
-                    <td><c:out value="${pit.total}"></c:out> $</td>
                 </tr>
               </c:forEach>
           </tbody>
@@ -90,10 +86,8 @@
     function addToBasket(){
         var quantity = parseInt($('#quantity').val());
         var productPrice = parseFloat($('#productPrice').val());
-        var tax = parseFloat($('#tax').val());
-        var total = parseFloat($('#total').val());
         var purchaseItem = {"productPrice":productPrice,"quantity":quantity,
-                            "tax":tax,"total":total};
+                            "tax":null,"total":null};
         $.ajax({
                 contentType: "application/json",
                 url: '/ShopApp/productDetail/addToBasket',
@@ -106,8 +100,7 @@
                             var tblRow = "<tr>" + "<td>" + data[i].name + "</td>" +
                                                             "<td>" + data[i].quantity + "</td>" +
                                                             "<td>" + data[i].productPrice + " $</td>" +
-                                                            "<td>" + data[i].tax + " $</td>" +
-                                                            "<td>" + data[i].total + " $</td>" + "</tr>";
+                                                            "</tr>";
 
                             $('#purchaseItemData tbody').append(tblRow);
                         });

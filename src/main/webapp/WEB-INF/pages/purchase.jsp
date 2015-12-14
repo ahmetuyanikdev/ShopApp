@@ -42,7 +42,10 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4"></td>
+                    <td colspan="3"></td>
+                    <td colspan="1">
+                        <label class="label label-success">Tax Total : ${taxTotal} $</label>
+                    </td>
                     <td colspan="1">
                         <label class="label label-success">Grand Total : ${grandTotal} $</label>
                     </td>
@@ -60,27 +63,6 @@
         var form = $('#purchaseForm');
         form.append("<input type='hidden' name='purchaseItemId' value='"+id+"' />");
         form.submit();
-
-
-       /* $.ajax({
-                    url: '/ShopApp/purchases/delete?purchaseItemId='+id,
-                    type: "GET",
-                    success:function(data){
-                        $('#shoppingData tbody').empty();
-                        $.each(data, function(i, f) {
-                            var pid = data[i].id;
-                            var tblRow = "<tr>" + "<td>" + data[i].name + "</td>" +
-                                    "<td>" + data[i].quantity + "</td>" +
-                                    "<td>" + data[i].productPrice + "</td>" +
-                                    "<td>" + data[i].tax + "</td>" +
-                                    "<td>" + data[i].total + "</td>" +
-                                    "<td>" + "<input class='btn btn-danger' onclick='alert(\'dddd\')' value='delete'>"+"</td>" + "</tr>";
-
-                            $('#shoppingData tbody').append(tblRow);
-                        });
-                    }
-                }
-        );*/
     }
 </script>
 </html>

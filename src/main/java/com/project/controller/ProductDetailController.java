@@ -25,7 +25,7 @@ public class ProductDetailController {
 
         product = (Product)persistenceService.read(productId,Product.class);
         PurchaseItem purchaseItem = new PurchaseItem();
-        purchaseItem.setProductPrice(product.getUnitPrice());
+        purchaseItem.productPrice=product.getUnitPrice();
         purchaseItem.setName(product.getName());
 
         modelMap.addAttribute("productDetailForm",purchaseItem);
