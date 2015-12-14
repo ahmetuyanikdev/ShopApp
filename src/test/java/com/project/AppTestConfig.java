@@ -1,6 +1,8 @@
 package com.project;
 
 
+import com.project.calculator.TaxCalculation;
+import com.project.calculator.TotalCalculation;
 import com.project.controller.*;
 import com.project.helper.CategoryHelper;
 import com.project.helper.ProductHelper;
@@ -32,6 +34,16 @@ public class AppTestConfig {
     SaleItemHelper saleItemHelper;
 
     @Bean
+    TaxCalculation taxCalculation(){
+        return  new TaxCalculation();
+    }
+
+    @Bean
+    TotalCalculation totalCalculation(){
+        return  new TotalCalculation();
+    }
+
+    @Bean
     CategoryController categoryController(){
         CategoryController categoryController  = new CategoryController();
         categoryController.categoryHelper = categoryHelper;
@@ -55,10 +67,12 @@ public class AppTestConfig {
     }
 
     @Bean
-    PurchaseItemController purchaseItemController(){
+    PurchaseItemController purchaseItemController(TaxCalculation taxCalculation,TotalCalculation totalCalculation){
         PurchaseItemController purchaseItemController= new PurchaseItemController();
         purchaseItemController.setPersistenceService(persistenceService);
         purchaseItemController.purchaseItemHelper = purchaseItemHelper;
+        purchaseItemController.setTaxCalculation(taxCalculation);
+        purchaseItemController.setTotalCalculation(totalCalculation);
         return purchaseItemController;
     }
 

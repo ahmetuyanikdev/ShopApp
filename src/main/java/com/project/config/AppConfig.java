@@ -1,10 +1,13 @@
 package com.project.config;
 
 import com.mongodb.MongoClient;
+import com.project.calculator.TaxCalculation;
+import com.project.calculator.TotalCalculation;
 import com.project.helper.CategoryHelper;
 import com.project.helper.ProductHelper;
 import com.project.helper.PurchaseItemHelper;
 import com.project.helper.SaleItemHelper;
+import com.project.interfaces.Calculation;
 import com.project.service.PersistenceService;
 import com.project.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +55,13 @@ public class AppConfig {
         return new SaleItemHelper();
     }
 
+    @Bean
+    TaxCalculation taxCalculation(){
+       return new TaxCalculation();
+    }
+
+    @Bean
+    TotalCalculation totalCalculation(){
+        return new TotalCalculation();
+    }
 }

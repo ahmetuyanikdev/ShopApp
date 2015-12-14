@@ -23,6 +23,12 @@ public class PurchaseItemController {
     PersistenceService persistenceService;
 
     @Autowired
+    TaxCalculation taxCalculation;
+
+    @Autowired
+    TotalCalculation totalCalculation;
+
+    @Autowired
     public PurchaseItemHelper purchaseItemHelper;
 
     List<PurchaseItem> purchaseItems;
@@ -41,9 +47,9 @@ public class PurchaseItemController {
 
     private float getTaxTotal(){
         float taxTotal=0;
-        TaxCalculation taxCalculation = new TaxCalculation();
+
         for (int i = 0; i <purchaseItems.size() ; i++) {
-            taxTotal=taxTotal+purchaseItems.get(i).getProductPrice(taxCalculation);
+            taxTotal=taxTotal+taxCalculation.doCalculation(purchaseItems.get(i));
             persistenceService.update(purchaseItems.get(i));
         }
         return taxTotal;
@@ -51,9 +57,9 @@ public class PurchaseItemController {
 
     private float getGrandTotal(){
         float grandTotal=0;
-        TotalCalculation totalCalculation = new TotalCalculation();
+
         for (int i = 0; i <purchaseItems.size() ; i++) {
-            grandTotal=grandTotal+purchaseItems.get(i).getProductPrice(totalCalculation);
+            grandTotal=grandTotal+totalCalculation.doCalculation(purchaseItems.get(i));
             persistenceService.update(purchaseItems.get(i));
         }
         return grandTotal;
@@ -77,5 +83,21 @@ public class PurchaseItemController {
 
     public void setPersistenceService(PersistenceService persistenceService) {
         this.persistenceService = persistenceService;
+    }
+
+    public TaxCalculation getTaxCalculation() {
+        return taxCalculation;
+    }
+
+    public void setTaxCalculation(TaxCalculation taxCalculation) {
+        this.taxCalculation = taxCalculation;
+    }
+
+    public TotalCalculation getTotalCalculation() {
+        return totalCalculation;
+    }
+
+    public void setTotalCalculation(TotalCalculation totalCalculation) {
+        this.totalCalculation = totalCalculation;
     }
 }
